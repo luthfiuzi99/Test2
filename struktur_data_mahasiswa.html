@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Mahasiswa</title>
+</head>
+
+<body>
+    <table>
+        <tr>
+            <td>NPM</td>
+            <td><input type="text" id="npm"></td>
+        </tr>
+        <tr>
+            <td>Nama</td>
+            <td><input type="text" id="nama"></td>
+        </tr>
+        <tr>
+            <td>Tempat Lahir</td>
+            <td><input type="text" id="tempat_lahir"></td>
+        </tr>
+        <tr>
+            <td>Tanggal Lahir</td>
+            <td><input type="text" id="tanggal_lahir"></td>
+        </tr>
+        <tr>
+            <td>Prodi</td>
+            <td><input type="text" id="prodi"></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <input type="button" value="Submit" onclick="tambahData()">
+            </td>
+        </tr>
+    </table>
+
+    <br>
+    Data Mahasiswa
+    <table border="2">
+        <thead>
+            <tr>
+                <th>NPM</th>
+                <th>Nama</th>
+                <th>Tempat Lahir</th>
+                <th>Tanggal Lahir</th>
+                <th>Prodi</th>
+                <th>Hapus</th>
+            </tr>
+        </thead>
+        <tbody id="listMahasiswa">
+        </tbody>
+    </table>
+
+    <br>
+    <br>
+    Object Data
+    <pre id="rawData">
+
+    </pre>
+
+    <script>
+        let mahasiswa = []
+
+        function renderMahasiswa() {
+            document.querySelector("#listMahasiswa").innerHTML = mahasiswa.map((item, index) => `
+            <tr>
+                <td>${item.npm}</td>
+                <td>${item.nama}</td>
+                <td>${item.tempat_lahir}</td>
+                <td>${item.tanggal_lahir}</td>
+                <td>${item.prodi}</td>
+                <td><input type="button" value="Hapus" onclick="hapusData(${index})"></td>
+            </tr>
+            `).join('')
+            document.querySelector("#rawData").innerHTML = JSON.stringify(mahasiswa, null, 2)
+        }
+        function resetForm() {
+            document.querySelector("#npm").value = ''
+            document.querySelector("#nama").value = ''
+            document.querySelector("#tempat_lahir").value = ''
+            document.querySelector("#tanggal_lahir").value = ''
+            document.querySelector("#prodi").value = ''
+        }
+        function tambahData() {
+            mahasiswa.push({
+                npm: document.querySelector("#npm").value,
+                nama: document.querySelector("#nama").value,
+                tempat_lahir: document.querySelector("#tempat_lahir").value,
+                tanggal_lahir: document.querySelector("#tanggal_lahir").value,
+                prodi: document.querySelector("#prodi").value
+            })
+            resetForm()
+            renderMahasiswa()
+            console.log(mahasiswa)
+        }
+
+        function hapusData(index) {
+            mahasiswa.splice(index, 1)
+            renderMahasiswa()
+        }
+
+        renderMahasiswa()
+    </script>
+</body>
+
+</html>
